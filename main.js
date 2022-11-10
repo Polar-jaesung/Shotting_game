@@ -31,14 +31,32 @@ function imgLoad(){
 // 버튼키 입력되는 이벤트
 let keysDown={}
 function setKeyboardListener(){
-    document.addEventListener('keydown',function(event){
-    keysDown[event.key]=true;
-    console.log('key down ??',keysDown);
- });
- document.addEventListener('keyup', function(event){
-    delete keysDown[event.key]
-    console.log('클릭후 ??',keysDown);
- })
+     document.addEventListener('keydown',function(event){
+     keysDown[event.keyCode]=true;
+     console.log('key down ??',keysDown);
+    });
+     document.addEventListener('keyup', function(event){
+     delete keysDown[event.keyCode]
+     console.log('클릭후 ??',keysDown);
+     })
+}
+
+// 좌 / 우 버튼 누리면 우주선 움직이는 이벤트
+function updatePosition(){
+    // 오른쪽
+    if( 39 in keysDown){
+        spaceship_x +=3;
+    } 
+    if( 37 in keysDown){
+        spaceship_x -=3;
+    }
+
+   if( spaceship_x <=0){
+    spaceship_x=0;
+   }
+   if(spaceship_x >= canvas.width-60){
+    spaceship_x =canvas.width-60;
+   }
 }
 
 function render(){
@@ -46,8 +64,9 @@ function render(){
     ctx.drawImage(spaceshipImg,spaceship_x, spaceship_y) 
 }
 function main(){
-    render()
-    requestAnimationFrame(main)
+    updatePosition(); //좌표값을 계속 업데이트하고
+    render();  // 보여주고
+    requestAnimationFrame(main);
 }
 
 imgLoad();
