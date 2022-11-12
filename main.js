@@ -32,6 +32,24 @@ function bullet(){
     }
 };
 
+// 적군이 랜덤한 위치에 생성
+function generateRandom(min,max){
+    let randomNum = Math.floor(Math.random()*(max-min+1)) + min
+    return randomNum
+}
+// 적군 나오는 리스트
+let enemyList=[]
+function Enemy(){
+    this.x=0
+    this.y=0
+    this.init = function(){
+        this.y=0
+        this.x= generateRandom(0,canvas.width-70)
+        enemyList.push(this)
+    }
+};
+
+
 
 function imgLoad(){
     bgImg = new Image();
@@ -65,8 +83,16 @@ function creatBullet(){
     console.log('총알!!');
     let b = new bullet()
     b.init()
-    console.log('새 총알 리스트',bulletList);
+    // console.log('새 총알 리스트',bulletList);
 };
+
+// 적군이 1초에 한번씩 호출
+function creatEnemy(){
+    const interval = setInterval( function(){
+        let e= new Enemy()
+        e.init()
+    },1000);
+}
 
 // 좌 / 우 버튼 누리면 우주선 움직이는 이벤트
 function updatePosition(){
@@ -97,6 +123,10 @@ function render(){
     for(let i=0; i<bulletList.length; i++){
         ctx.drawImage(bulletImg,bulletList[i].x, bulletList[i].y,15,15)
     }
+
+    for(let i=0; i<enemyList.length; i++){
+        ctx.drawImage(enemyImg, enemyList[i].x, enemyList[i].y, 70,70)
+    }
 }
 function main(){
     updatePosition(); //좌표값을 계속 업데이트하고
@@ -106,4 +136,5 @@ function main(){
 
 imgLoad();
 setKeyboardListener();
+creatEnemy();
 main();
