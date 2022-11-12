@@ -47,6 +47,9 @@ function Enemy(){
         this.x= generateRandom(0,canvas.width-70)
         enemyList.push(this)
     }
+    this.update =function(){
+        this.y +=2;
+    }
 };
 
 
@@ -114,6 +117,13 @@ function updatePosition(){
       for(let i=0; i<bulletList.length; i++){
         bulletList[i].update()
       }
+
+    //   적군이 y좌표 따라서 내려오는 함수 호출
+    for(let i=0; i<enemyList.length; i++){
+        enemyList[i].update()
+    }
+
+
 }
 
 function render(){
