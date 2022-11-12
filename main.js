@@ -156,6 +156,11 @@ function updatePosition(){
 function render(){
     ctx.drawImage(bgImg,0,0, canvas.width, canvas.height);
     ctx.drawImage(spaceshipImg,spaceship_x, spaceship_y);
+
+    // 스코어 텍스트 삽입
+    ctx.fillText(`Score: ${score}`,20,30);
+    ctx.fillStyle ="white";
+    ctx.font ="20px Arial";
     
     for(let i=0; i<bulletList.length; i++){
         if(bulletList[i].alive){
