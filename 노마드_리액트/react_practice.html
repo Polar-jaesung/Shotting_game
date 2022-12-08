@@ -66,10 +66,71 @@
       );
     };
 
+    const GramToKg = () => {
+      const [amount, setAmount] = React.useState();
+      const changeAmount = (event) => {
+        setAmount(event.target.value);
+      };
+
+      const resetBtn = () => {
+        setAmount(0);
+      };
+
+      const [reverse, setReverse] = React.useState(false);
+      const changeUnit = () => {
+        setReverse((current) => !current);
+        resetBtn();
+      };
+
+      return (
+        <div>
+          <div>
+            <label for="gram">Gram: </label>
+            <input
+              id="gram"
+              type="number"
+              onChange={changeAmount}
+              value={reverse ? amount * 1000 : amount}
+              placeholder="Gram"
+              disabled={reverse === true}
+            />
+          </div>
+          <div>
+            <label for="kg">Kg: </label>
+            <input
+              id="kg"
+              type="number"
+              onChange={changeAmount}
+              value={reverse ? amount : (amount / 1000).toFixed(1)}
+              placeholder="Kg"
+              disabled={reverse === false}
+            />
+          </div>
+          <div>
+            <button onClick={changeUnit}>
+              {reverse ? "for Kg" : "for Gram"}{" "}
+            </button>
+          </div>
+          <div>
+            <button onClick={resetBtn}>Reset</button>
+          </div>
+        </div>
+      );
+    };
+
     const App = () => {
       return (
         <div>
+          <h1>Lets Game</h1>
+          <select>
+            <option value="0">Lets Start</option>
+            <option value="1">Mins To Hrs</option>
+            <option value="2">gram To Kg</option>
+          </select>
+          <h3>1. Game</h3>
           <MinutesToHours />
+          <h3>2. Game</h3>
+          <GramToKg />
         </div>
       );
     };
