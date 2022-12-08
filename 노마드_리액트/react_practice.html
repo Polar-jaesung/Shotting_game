@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="root"></div>
+  </body>
+
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const MinutesToHours = () => {
+      const [amount, setAmount] = React.useState();
+      const [reverse, setReverse] = React.useState(false);
+
+      const changeAmount = (event) => {
+        setAmount(event.target.value);
+      };
+      const resetBtn = () => setAmount("0");
+
+      const changeUnit = () => {
+        setReverse((current) => !current);
+        resetBtn();
+      };
+
+      return (
+        <div>
+          <div>
+            <label for="mins">Minutes: </label>
+            <input
+              id="mins"
+              onChange={changeAmount}
+              placeholder="Minutes"
+              value={reverse ? amount * 60 : amount}
+              type="number"
+              disabled={reverse === true}
+            />
+          </div>
+          <div>
+            <label for="hrs">Hours: </label>
+            <input
+              id="hrs"
+              onChange={changeAmount}
+              placeholder="Hours"
+              value={reverse ? amount : (amount / 60).toFixed(1)}
+              type="number"
+              disabled={reverse === false}
+            />
+          </div>
+          <div>
+            <button onClick={changeUnit}>
+              {reverse ? "Change for Mins" : "Reverse"}
+            </button>
+          </div>
+          <div>
+            <button onClick={resetBtn}>Reset</button>
+          </div>
+        </div>
+      );
+    };
+
+    const App = () => {
+      return (
+        <div>
+          <MinutesToHours />
+        </div>
+      );
+    };
+
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root);
+  </script>
+</html>
