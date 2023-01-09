@@ -145,15 +145,30 @@
         tick();
       });
 
+      // 확률을 각각 30% 20%로 쓰지말고 , 누적 확률을 사용하면 좀더 쉽게 확률 계산가능함
+      let gopherShow = 0.3;
+      let bombShow = 0.5;
+
       const tick = () => {
         holes.forEach((hole, index) => {
           if (hole) return; //무언가 일어나고 있으면 스킵하도록!
-          const $gopher = $$cells[index].querySelector(".gopher");
-          holes[index] = setTimeout(() => {
-            $gopher.classList.add("hidden");
-            holes[index] = 0;
-          }, 1000);
-          $gopher.classList.remove("hidden");
+          const randomValue = Math.random();
+
+          if (randomValue < gopherShow) {
+            const $gopher = $$cells[index].querySelector(".gopher");
+            holes[index] = setTimeout(() => {
+              $gopher.classList.add("hidden");
+              holes[index] = 0;
+            }, 1000);
+            $gopher.classList.remove("hidden");
+          } else if (randomValue < bombShow) {
+            const $bomb = $$cells[index].querySelector(".bomb");
+            holes[index] = setTimeout(() => {
+              $bomb.classList.add("hidden");
+              holes[index] = 0;
+            }, 1000);
+            $bomb.classList.remove("hidden");
+          }
         });
       };
     </script>
